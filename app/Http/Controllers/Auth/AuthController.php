@@ -29,13 +29,16 @@ class AuthController extends Controller
     $get_user = User::where('email', $email)
     ->first()->type;
 
-    dd($get_user);
 
-    if($get_user !== 0){
-        return back()->with('error', 'You are not an admin');
+    if($get_user == 0){
+
+        return redirect('admin-dashboard');
 
     }else{
-        return redirect('admin-dashboard');
+
+        return back()->with('error', 'You are not an admin');
+
+
     }
 
 
