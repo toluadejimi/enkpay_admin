@@ -29,6 +29,8 @@ class AuthController extends Controller
     $get_user = User::where('email', $email)
     ->first()->type;
 
+    dd($get_user);
+
     if($get_user !== 0){
         return back()->with('error', 'You are not an admin');
 
