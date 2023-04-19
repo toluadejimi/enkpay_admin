@@ -368,25 +368,18 @@
                                       <td>{{$item->ref_trans_id}}</td>
                                       <td>{{$item->e_ref}}</td>
                                       <td>{{$item->title}}</td>
-
                                       <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
-                                      <td>{{$item->debit}}</td>
-                                      <td>{{$item->credit}}</td>
-                                      <td>{{$item->balance}}</td>
-                                      <td>{{$item->fee}}</td>
-                                      <td>{{$item->enkPay_Cashout_profit}}</td>
+                                      <td>{{number_format($item->debit)}}</td>
+                                      <td>{{number_format($item->credit)}}</td>
+                                      <td>{{number_format($item->balance)}}</td>
+                                      <td>{{number_format($item->fee)}}</td>
+                                      <td>{{number_format($item->enkPay_Cashout_profit)}}</td>
                                       <td>{{$item->serial_no}}</td>
                                       <td>{{$item->sender_name}}</td>
                                       <td>{{$item->sender_account_no}}</td>
                                       <td>{{$item->sender_bank}}</td>
                                       <td>{{$item->receiver_name}}</td>
                                       <td>{{$item->receiver_account_no}}</td>
-
-
-
-
-
-
 
                                       @if($item->status == "1")
                                       <td><span class="badge rounded-pill bg-success ">Successful</span></td>
