@@ -1,24 +1,24 @@
 @extends('layouts.customers')
 
 @section('content')
-    <div class="container-fluid py-4">
-        <div class="col-6 w-100">
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if (session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session()->get('message') }}
-                </div>
-            @endif
+<div class="container-fluid py-4">
+    <div class="col-6 w-100">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-        <div class="row mb-3">
+        @endif
+        @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+        @endif
+    </div>
+    <div class="row mb-3">
 
 
 
@@ -115,8 +115,8 @@
             <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
                 <div class="card">
                     <div class="card-header pb-0">
-                        
-                        <a><button class="btn btn-primary mr-1"  href="submit">Submit</button></a>
+
+                        <a><button class="btn btn-primary mr-1" href="submit">Submit</button></a>
 
                         <div class="row">
                             <div class="col-lg-6 col-7">
@@ -141,6 +141,8 @@
                                         <th>Gender</th>
                                         <th>Banalce NGN</th>
                                         <th>Status</th>
+                                        <th>Customer Type</th>
+
                                     </tr>
                                 </thead>
 
@@ -151,20 +153,31 @@
 
 
                                     <tr>
-                                      <td><a href="/order-details/?id={{$item->id}}">{{$item->first_name ?? 'name'}} {{$item->last_name ?? "name"}}</a></td>
-                                      <td>{{$item->phone}}</td>
-                                      <td>{{$item->state}}</td>
-                                      <td>{{$item->gender}}</td>
-                                      <td>{{number_format($item->main_wallet)}}</td>
-                                      @if($item->status == "2")
-                                      <td><span class="badge rounded-pill bg-success ">Verfied</span></td>
-                                      @elseif($item->status == "1")
-                                      <td><span class="badge rounded-pill bg-warning">Pending</span></td>
-                                      @else
-                                    @endif
+                                        <td><a href="/order-details/?id={{$item->id}}">{{$item->first_name ?? 'name'}}
+                                                {{$item->last_name ?? "name"}}</a></td>
+                                        <td>{{$item->phone}}</td>
+                                        <td>{{$item->state}}</td>
+                                        <td>{{$item->gender}}</td>
+                                        <td>{{number_format($item->main_wallet)}}</td>
+                                        @if($item->status == "2")
+                                        <td><span class="badge rounded-pill bg-success ">Verfied</span></td>
+                                        @elseif($item->status == "1")
+                                        <td><span class="badge rounded-pill bg-warning">Not verified</span></td>
+                                        @else
+                                        @endif
+                                        @if($item->type == "2")
+                                        <td><span class="badge rounded-pill bg-success ">Customer</span></td>
+                                        @elseif($item->type == "3")
+                                        <td><span class="badge rounded-pill bg-warning">Business</span></td>
+                                        @else
+                                        <td><span class="badge rounded-pill bg-danger">Agent</span></td>
+
+                                        @endif
 
 
                                     </tr>
+
+
                                     @empty
                                     <tr colspan="20" class="text-center">No Record Found</tr>
                                     @endforelse
@@ -186,4 +199,4 @@
 
             </div>
         </div>
-    @endsection
+        @endsection
