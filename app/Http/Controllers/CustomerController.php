@@ -27,7 +27,7 @@ class CustomerController extends Controller
 
 
 
-        $customers = User::latest()->orderBy('first_name')->paginate('50');
+        $customers = User::latest()->orderBy('first_name', 'ASC')->paginate('50');
 
 
         $business_customers = User::where('type', 3)
