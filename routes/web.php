@@ -31,6 +31,10 @@ Route::get('admin-dashboard',[DashboardController::class, 'index']);
 
 Route::get('customer',[CustomerController::class, 'index']);
 
+Route::get('customer-details',[CustomerController::class, 'customer_details']);
+
+
+
 
 
 

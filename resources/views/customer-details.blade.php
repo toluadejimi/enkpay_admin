@@ -35,7 +35,6 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Business Customers</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        {{number_format($business_customers)}}
                                     </h5>
                                 </div>
                             </div>
@@ -57,7 +56,6 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Agent Customers</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        {{number_format($agent_customers)}}
                                     </h5>
                                 </div>
                             </div>
@@ -80,7 +78,6 @@
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">App Customer</p>
                                     <h5 class="font-weight-bolder mb-0">
 
-                                        {{number_format($app_customer)}}
 
                                     </h5>
                                 </div>
@@ -115,12 +112,9 @@
             <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
                 <div class="card">
                     <div class="card-header pb-0">
-
-                        <a><button class="btn btn-primary mr-1" href="submit">Submit</button></a>
-
                         <div class="row">
                             <div class="col-lg-6 col-7">
-                                <h6>List of Customers</h6>
+                                <h6>Customer Transactions</h6>
                                 <p class="text-sm mb-0">
                                 </p>
                             </div>
@@ -135,48 +129,62 @@
                                 <thead>
 
                                     <tr>
-                                        <th>Customer Name</th>
-                                        <th>Phone</th>
-                                        <th>State</th>
-                                        <th>Gender</th>
-                                        <th>Banalce NGN</th>
-                                        <th>Status</th>
-                                        <th>Customer Type</th>
+                                        <th>Trx ID</th>
+                                        <th>E REF</th>
+                                        <th>Title</th>
+                                        <th>Customer</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Balance</th>
+                                        <th>E Fee</th>
+                                        <th>Profit</th>
+                                        <th>Terminal No</th>
+                                        <th>Sender Name</th>
+                                        <th>Sender Account</th>
+                                        <th>Sender Bank</th>
+                                        <th>Receiver Name</th>
+                                        <th>Receiver Account</th>
 
+
+                                        <th>Status</th>
+                                        <th>Date</th>
+
+                                        <th>Time</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
 
-
-                                    @forelse ($customers as $item)
-
-
+                                    @forelse ($customer_trasnactions as $item)
                                     <tr>
-                                        <td><a href="/customer-details/?id={{$item->id}}">{{$item->first_name ?? 'name'}} {{$item->last_name ?? "name"}}</a></td>
-                                        <td>{{$item->phone}}</td>
-                                        <td>{{$item->state}}</td>
-                                        <td>{{$item->gender}}</td>
-                                        <td>{{number_format($item->main_wallet)}}</td>
-                                        @if($item->status == "2")
-                                        <td><span class="badge rounded-pill bg-success ">Verfied</span></td>
-                                        @elseif($item->status == "1")
-                                        <td><span class="badge rounded-pill bg-warning">Not verified</span></td>
-                                        @else
-                                        @endif
-                                        @if($item->type == "2")
-                                        <td><span class="badge rounded-pill bg-success ">Customer</span></td>
-                                        @elseif($item->type == "3")
-                                        <td><span class="badge rounded-pill bg-warning">Business</span></td>
-                                        @else
-                                        <td><span class="badge rounded-pill bg-danger">Agent</span></td>
+                                      {{-- <td><a href="/order-details/?id={{$item->id}}">{{$item->order_id}}</a></td> --}}
+                                      <td>{{$item->ref_trans_id}}</td>
+                                      <td>{{$item->e_ref}}</td>
+                                      <td>{{$item->title}}</td>
+                                      <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
+                                      <td>{{number_format($item->debit)}}</td>
+                                      <td>{{number_format($item->credit)}}</td>
+                                      <td>{{number_format($item->balance)}}</td>
+                                      <td>{{number_format($item->fee)}}</td>
+                                      <td>{{number_format($item->enkPay_Cashout_profit)}}</td>
+                                      <td>{{$item->serial_no}}</td>
+                                      <td>{{$item->sender_name}}</td>
+                                      <td>{{$item->sender_account_no}}</td>
+                                      <td>{{$item->sender_bank}}</td>
+                                      <td>{{$item->receiver_name}}</td>
+                                      <td>{{$item->receiver_account_no}}</td>
 
-                                        @endif
-
+                                      @if($item->status == "1")
+                                      <td><span class="badge rounded-pill bg-success ">Successful</span></td>
+                                      @elseif($item->status == "0")
+                                      <td><span class="badge rounded-pill bg-warning">Pending</span></td>
+                                      @else
+                                      <td><span class="badge rounded-pill bg-danger">Declined</span></td>
+                                      @endif
+                                      <td>{{date('F d, Y', strtotime($item->created_at))}}</td>
+                                      <td>{{date('h:i:s A', strtotime($item->created_at))}}</td>
 
                                     </tr>
-
-
                                     @empty
                                     <tr colspan="20" class="text-center">No Record Found</tr>
                                     @endforelse
@@ -184,7 +192,7 @@
 
                                 </tbody>
 
-                                {{ $customers->onEachSide(5)->links() }}
+                                {{ $customer_trasnactions->onEachSide(5)->links() }}
 
 
                             </table>

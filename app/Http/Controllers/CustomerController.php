@@ -41,17 +41,26 @@ class CustomerController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
         return view('customer', compact( 'app_customer', 'customers', 'business_customers', 'agent_customers','total_users'));
+
+
+    }
+
+
+    public function customer_details(request $request){
+
+
+        $customer_trasnactions = Transaction::latest()->where('user_id', $request->id)
+        ->paginate('10');
+
+        $customer = User::where('id', $request->id)
+        ->first();
+
+
+        return view('customer-details', compact( 'customer_trasnactions', 'customer'));
+
+
+
 
 
     }
