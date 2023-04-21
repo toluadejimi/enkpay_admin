@@ -63,6 +63,10 @@ class DashboardController extends Controller
 
         $errand_profit = $total_profit_pos + $total_profit_vas;
 
+        $transfer_profit = Transaction::select('enkPay_Cashout_profit')
+        ->where('main_type', 'Transfer')
+        ->sum('enkPay_Cashout_profit');
+
 
 
         $user = User::all();
@@ -86,7 +90,7 @@ class DashboardController extends Controller
 
 
 
-        return view('admin-dashboard', compact('total_money_in', 'user', 'errand_profit', 'pool_total','total_profit_pos','total_profit_vas','app_customer', 'business_customers', 'agent_customers','total_money_out','total_money_out_today', 'total_users', 'total_orders', 'pending_orders','total_money_in_today', 'latest_transactions'));
+        return view('admin-dashboard', compact('transfer_profit','total_money_in', 'user', 'errand_profit', 'pool_total','total_profit_pos','total_profit_vas','app_customer', 'business_customers', 'agent_customers','total_money_out','total_money_out_today', 'total_users', 'total_orders', 'pending_orders','total_money_in_today', 'latest_transactions'));
 
 
     }

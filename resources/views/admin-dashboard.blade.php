@@ -182,10 +182,10 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Profit on VAS</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Profit on Transfer</p>
                                     <h5 class="font-weight-bolder mb-0">
 
-                                        NGN{{number_format($total_profit_vas)}}
+                                        NGN{{number_format($transfer_profit)}}
 
 
 
