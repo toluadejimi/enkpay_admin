@@ -33,6 +33,9 @@ Route::get('customer',[CustomerController::class, 'index']);
 
 Route::get('customer-details',[CustomerController::class, 'customer_details']);
 
+Route::post('update-customer',[CustomerController::class, 'update_customer']);
+
+
 
 
 
