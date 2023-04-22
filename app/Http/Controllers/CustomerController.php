@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 
 class CustomerController extends Controller
 {
@@ -46,15 +48,74 @@ class CustomerController extends Controller
     public function update_customer(request $request)
     {
 
-        dd($request->all());
-        $customer_trasnactions = Transaction::latest()->where('user_id', $request->id)
-            ->paginate('10');
+        $user = User::find($request->id);
 
-        $customer = User::where('id', $request->id)
-            ->first();
+        if ($user === null) {
+            return response(
+                "User with id {$request->id} not found",
+                Response::HTTP_NOT_FOUND
+            );
+        }
 
-        return view('customer-details', compact('customer_trasnactions', 'customer'));
+        if ($user->update($request->all()) === false) {
+            return response(
+                "Couldn't update the user with id {$request->id}",
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+
+        return back()->with('message', 'Customer Information Successfully Updated');
+
+
+
+
+        // $update = User::where('id', $request->id)
+        //     ->update([
+
+        //         'first_name' => $request->first_name,
+        //         'last_name' => $request->last_name,
+        //         'phone' => $request->phone,
+        //         'gender' => $request->gender,
+        //         'address_line1' => $request->address_line1,
+        //         'lga' => $request->lga,
+        //         'state' => $request->state,
+        //         'serial_no' => $request->serial_no,
+        //         'v_account_no' => $request->v_account_no,
+        //         'v_account_name' => $request->v_account_name,
+        //         'v_bank_name' => $request->v_bank_name,
+        //         'c_account_number' => $request->c_account_number,
+        //         'c_account_name' => $request->c_account_name,
+        //         'c_bank_name' => $request->c_bank_name,
+        //         'v_account_no' => $request->v_account_no,
+        //         'email' => $request->email,
+        //         'password' => bcrypt($request->password) ,
+        //         'v_account_no' => $request->v_account_no,
+
+        // ]);
+
+        // dd($update);
 
     }
+
+
+    public function update_verification(request $request)
+    {
+
+        $update = User::where('id', $request->id)
+            ->update([
+
+                'status' => '2',
+                'is_identification_verified' => '1'
+
+        ]);
+
+
+        return back()->with('message', 'Identification Successfully Updated');
+
+    }
+
+
+
 
 }

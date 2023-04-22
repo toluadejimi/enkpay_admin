@@ -21,8 +21,7 @@
     </div>
 
 
-    @if ($customer->is_identification = "2")
-
+    @if($customer->is_identification_verified  == "2" )
 
     <div class="row my-1">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -40,20 +39,24 @@
 
                                 <h6>Selfie Photo</h6>
 
-                                <div class="card" style="width: 15rem;">
-                                    <img class="card-img-top" src="https://enkpayapp.enkwave.com/public/upload/selfie/{{$customer->image}}" alt="Card image cap">
+                                <div class="card" style="width: 10rem;">
+                                    <img class="card-img-top"
+                                        src="https://enkpayapp.enkwave.com/public/upload/selfie/{{$customer->image ?? 2}}"
+                                        alt="Card image cap">
 
-                                  </div>
+                                </div>
 
                             </div>
 
                             <div class="col-lg-4">
 
                                 <h6>Identification Photo</h6>
-                                <div class="card" style="width: 15rem;">
-                                    <img class="card-img-top" src="https://enkpayapp.enkwave.com/public/upload/identification_image/{{$customer->identification_image}}" alt="Card image cap">
+                                <div class="card" style="width: 10rem;">
+                                    <img class="card-img-top"
+                                        src="https://enkpayapp.enkwave.com/public/upload/identification_image/{{$customer->identification_image ?? 2}}"
+                                        alt="Card image cap">
 
-                                  </div>
+                                </div>
 
                             </div>
 
@@ -61,10 +64,12 @@
                             <div class="col-lg-3 col-md-6 mb-md-0 mb-4 form-group">
 
                                 <h6>Utility Bill Photo</h6>
-                                <div class="card" style="width: 15rem;">
-                                    <img class="card-img-top" src="https://enkpayapp.enkwave.com/public/upload/utilitybill/{{$customer->utility_bill}}" alt="Card image cap">
+                                <div class="card" style="width: 10rem;">
+                                    <img class="card-img-top"
+                                        src="https://enkpayapp.enkwave.com/public/upload/utilitybill/{{$customer->utility_bill ?? 2}}"
+                                        alt="Card image cap">
 
-                                  </div>
+                                </div>
 
                             </div>
 
@@ -73,8 +78,8 @@
                             <hr class="mt-4" />
 
                             <a href="/update-verification/?id={{$customer->id}}"
-                                class="btn btn-block btn-primary col-lg-3 btn-lg mt-4 font-weight-medium auth-form-btn"
-                                type="submit">Update Info</a></button>
+                                class="btn btn-block btn-primary col-lg-6 btn-lg mt-4 font-weight-medium auth-form-btn"
+                                type="submit">Update Verification Info</a></button>
 
                         </div>
 
@@ -113,10 +118,10 @@
 
                                     <div class="col-lg-2">
 
-                                        @if($customer->is_phone_verified == "1")
+                                        @if($customer->is_phone_verified ?? null == "1")
                                         <td><span class="badge rounded-pill bg-success ">Phone Number Verified</span>
                                         </td>
-                                        @elseif($customer->is_phone_verified == "0")
+                                        @elseif($customer->is_phone_verified ?? null == "0")
                                         <td><span class="badge rounded-pill bg-warning">Phone Number Not Verified</span>
                                         </td>
                                         @else
@@ -128,9 +133,9 @@
 
                                     <div class="col-lg-2">
 
-                                        @if($customer->is_email_verified == "1")
+                                        @if($customer->is_email_verified  ?? null == "1")
                                         <td><span class="badge rounded-pill bg-success ">Email Verified</span></td>
-                                        @elseif($customer->is_email_verified == "0")
+                                        @elseif($customer->is_email_verified ?? null == "0")
                                         <td><span class="badge rounded-pill bg-warning">Email Not Verified</span></td>
                                         @else
                                         <td><span class="badge rounded-pill bg-danger">Email Terminated</span></td>
@@ -140,12 +145,12 @@
 
                                     <div class="col-lg-2">
 
-                                        @if($customer->is_identification_verified == "1")
+                                        @if($customer->is_identification_verified ?? null == "1")
                                         <td><span class="badge rounded-pill bg-success ">Identity Approved</span></td>
-                                        @elseif($customer->is_identification_verified == "2")
+                                        @elseif($customer->is_identification_verified ?? null == "2")
                                         <td><span class="badge rounded-pill bg-warning">Pending Identity Approval</span>
                                         </td>
-                                        @elseif($customer->is_identification_verified == "0")
+                                        @elseif($customer->is_identification_verified ?? null == "0")
                                         <td><span class="badge rounded-pill bg-warning">No Identity Info</span></td>
                                         @else
                                         <td><span class="badge rounded-pill bg-danger">Identity Rejected</span></td>
@@ -155,9 +160,9 @@
 
                                     <div class="col-lg-2">
 
-                                        @if($customer->is_kyc_verified == "1")
+                                        @if($customer->is_kyc_verified ?? null == "1")
                                         <td><span class="badge rounded-pill bg-success ">Bvn Verified</span></td>
-                                        @elseif($customer->is_kyc_verified == "0")
+                                        @elseif($customer->is_kyc_verified ?? null == "0")
                                         <td><span class="badge rounded-pill bg-warning">BVN Not Updated</span></td>
                                         @else
                                         <td><span class="badge rounded-pill bg-danger">Terminated</span></td>
@@ -203,6 +208,7 @@
                                         value="{{$customer->first_name}}">
                                 </div>
 
+
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Last Name</label>
                                     <input class="form-control form-control-lg" name="last_name" autofocus required
@@ -226,6 +232,9 @@
                                         <option value="prefer">Prefer not to say</option>
 
                                     </select>
+
+                                        <input class="form-control form-control-lg" hidden name="id" autofocus required
+                                            value="{{$customer->id}}">
                                 </div>
 
 

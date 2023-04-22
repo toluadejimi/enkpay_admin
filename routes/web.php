@@ -35,6 +35,10 @@ Route::get('customer-details',[CustomerController::class, 'customer_details']);
 
 Route::post('update-customer',[CustomerController::class, 'update_customer']);
 
+Route::get('update-verification',[CustomerController::class, 'update_verification']);
+
+
+
 
 
 
