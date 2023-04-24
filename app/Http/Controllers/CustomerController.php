@@ -48,6 +48,7 @@ class CustomerController extends Controller
     public function update_customer(request $request)
     {
 
+
         $user = User::find($request->id);
 
         if ($user === null) {
@@ -87,6 +88,15 @@ class CustomerController extends Controller
 
         // dd($update);
 
+    }
+
+    public function changeTerminalStatus(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->is_active = $request->status;
+        $user->save();
+
+        return response()->json(['success'=>'Status change successfully.']);
     }
 
 

@@ -21,7 +21,7 @@
     </div>
 
 
-    @if($customer->is_identification_verified  == "2" )
+    @if($customer->is_identification_verified == "2" )
 
     <div class="row my-1">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -133,7 +133,7 @@
 
                                     <div class="col-lg-2">
 
-                                        @if($customer->is_email_verified  ?? null == "1")
+                                        @if($customer->is_email_verified ?? null == "1")
                                         <td><span class="badge rounded-pill bg-success ">Email Verified</span></td>
                                         @elseif($customer->is_email_verified ?? null == "0")
                                         <td><span class="badge rounded-pill bg-warning">Email Not Verified</span></td>
@@ -177,10 +177,25 @@
                                         <td><span class="badge rounded-pill bg-success ">Account Verified</span></td>
                                         @elseif($customer->status == "1")
                                         <td><span class="badge rounded-pill bg-warning">Pending Verification</span></td>
+                                        @elseif($customer->status == "0")
+                                        <td><span class="badge rounded-pill bg-primary">Account Not Verified</span></td>
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Terminated</span></td>
+                                        <td><span class="badge rounded-pill bg-danger">Account Terminated</span></td>
                                         @endif
 
+
+                                    </div>
+
+
+                                    <div class="col-lg-2">
+
+                                        @if($customer->is_active ?? null == "1")
+                                        <td><span class="badge rounded-pill bg-success ">Terminal Active</span>
+                                        </td>
+                                        @else
+                                        <td><span class="badge rounded-pill bg-danger">Terminal Inactive</span>
+                                        </td>
+                                        @endif
 
                                     </div>
 
@@ -204,26 +219,26 @@
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>First Name</label>
-                                    <input class="form-control form-control-lg" name="first_name" autofocus required
+                                    <input class="form-control form-control-lg" name="first_name" autofocus
                                         value="{{$customer->first_name}}">
                                 </div>
 
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Last Name</label>
-                                    <input class="form-control form-control-lg" name="last_name" autofocus required
+                                    <input class="form-control form-control-lg" name="last_name" autofocus
                                         value="{{$customer->last_name}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Phone</label>
-                                    <input class="form-control form-control-lg" name="phone" autofocus required
+                                    <input class="form-control form-control-lg" name="phone" autofocus
                                         value="{{$customer->phone}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-6 mb-md-0 mb-4 form-group">
                                     <label> Gender </label>
-                                    <select class="form-control form-control-lg" required name="gender"
+                                    <select class="form-control form-control-lg" name="gender"
                                         id="exampleFormControlSelect2">
 
                                         <option value="{{$customer->gender}}">{{$customer->gender}}</option>
@@ -233,8 +248,8 @@
 
                                     </select>
 
-                                        <input class="form-control form-control-lg" hidden name="id" autofocus required
-                                            value="{{$customer->id}}">
+                                    <input class="form-control form-control-lg" hidden name="id" autofocus
+                                        value="{{$customer->id}}">
                                 </div>
 
 
@@ -243,49 +258,61 @@
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Address</label>
-                                    <input class="form-control form-control-lg" name="address_line1" autofocus required
+                                    <input class="form-control form-control-lg" name="address_line1" autofocus
                                         value="{{$customer->address_line1}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>LGA</label>
-                                    <input class="form-control form-control-lg" name="lga" autofocus required
+                                    <input class="form-control form-control-lg" name="lga" autofocus
                                         value="{{$customer->lga}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>State</label>
-                                    <input class="form-control form-control-lg" name="state" autofocus required
+                                    <input class="form-control form-control-lg" name="state" autofocus
                                         value="{{$customer->state}}">
                                 </div>
 
                                 <hr class="mt-4" />
                                 <h6>Terminal Information</h6>
 
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                                <div class="col-lg-3 mb-4">
                                     <label>Terminal ID</label>
-                                    <input class="form-control form-control-lg" name="serial_no" autofocus required
+                                    <input class="form-control form-control-lg" name="serial_no" autofocus
                                         value="{{$customer->serial_no}}">
                                 </div>
+
+                                <div class="col-lg-3">
+                                    <span>Terminal Status</span>
+                                    <div class="mt-2">
+                                    <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox" name="t_status"
+                                        data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
+                                        data-on="Active" data-off="InActive" {{ $customer->is_active ? 'checked' : '' }}>
+                                    </div>
+
+                                </div>
+
+
 
                                 <hr class="mt-4" />
                                 <h6>Virtual Account Information</h6>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Number</label>
-                                    <input class="form-control form-control-lg" name="v_account_no" autofocus required
+                                    <input class="form-control form-control-lg" name="v_account_no" autofocus
                                         value="{{$customer->v_account_no}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Name</label>
-                                    <input class="form-control form-control-lg" name="v_account_name" autofocus required
+                                    <input class="form-control form-control-lg" name="v_account_name" autofocus
                                         value="{{$customer->v_account_name}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Bank</label>
-                                    <input class="form-control form-control-lg" name="v_bank_name" autofocus required
+                                    <input class="form-control form-control-lg" name="v_bank_name" autofocus
                                         value="{{$customer->v_bank_name}}">
                                 </div>
 
@@ -296,18 +323,18 @@
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Cash Out Account Number</label>
                                     <input class="form-control form-control-lg" name="c_account_number" autofocus
-                                        required value="{{$customer->c_account_number}}">
+                                        value="{{$customer->c_account_number}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Cash Out Account Name</label>
-                                    <input class="form-control form-control-lg" name="c_account_name" autofocus required
+                                    <input class="form-control form-control-lg" name="c_account_name" autofocus
                                         value="{{$customer->c_account_name}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Cash Out Account Bank</label>
-                                    <input class="form-control form-control-lg" name="c_bank_name" autofocus required
+                                    <input class="form-control form-control-lg" name="c_bank_name" autofocus
                                         value="{{$customer->c_bank_name}}">
                                 </div>
 
@@ -316,13 +343,13 @@
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Phone Number</label>
-                                    <input class="form-control form-control-lg" name="phone" autofocus required
+                                    <input class="form-control form-control-lg" name="phone" autofocus
                                         value="{{$customer->phone}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Email</label>
-                                    <input class="form-control form-control-lg" name="email" autofocus required
+                                    <input class="form-control form-control-lg" name="email" autofocus
                                         value="{{$customer->email}}">
                                 </div>
 
@@ -471,5 +498,31 @@
         <div class="col-lg-4 col-md-6">
 
         </div>
+
+        <script>
+            $(function() {
+              $('.toggle-class').change(function() {
+                  var status = $(this).prop('checked') == true ? 1 : 0;
+                  var user_id = $(this).data('id');
+
+                  $.ajax({
+                      type: "GET",
+                      dataType: "json",
+                      url: '/changeterminalstatus',
+                      data: {'status': status, 'user_id': user_id},
+                      success: function(data){
+                        console.log(data.success),
+                        location.reload()
+                      }
+                  });
+              })
+            })
+          </script>
     </div>
+
+
+
+
+
+
     @endsection

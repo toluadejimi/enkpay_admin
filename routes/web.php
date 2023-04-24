@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SettingsController;
+
 
 
 
@@ -36,6 +38,20 @@ Route::get('customer-details',[CustomerController::class, 'customer_details']);
 Route::post('update-customer',[CustomerController::class, 'update_customer']);
 
 Route::get('update-verification',[CustomerController::class, 'update_verification']);
+
+Route::get('changeterminalstatus',[CustomerController::class, 'changeTerminalStatus']);
+
+
+
+//settings
+Route::get('settings',[SettingsController::class, 'index']);
+Route::get('changeposstatus',[SettingsController::class, 'changePosStatus']);
+Route::get('changedatastatus',[SettingsController::class, 'changeDataStatus']);
+Route::get('changeterminalstatus',[SettingsController::class, 'changeTerminalStatus']);
+
+
+
+
 
 
 
