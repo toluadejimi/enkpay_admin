@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-
 class CustomerController extends Controller
 {
 
@@ -36,7 +35,7 @@ class CustomerController extends Controller
     {
 
         $customer_trasnactions = Transaction::latest()->where('user_id', $request->id)
-            ->paginate('10');
+            ->paginate('100');
 
         $customer = User::where('id', $request->id)
             ->first();
@@ -45,9 +44,29 @@ class CustomerController extends Controller
 
     }
 
+    public function date_search(request $request)
+    {
+        $customer = User::where('id', $request->user_id)
+        ->first();
+
+
+
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+
+        $customer_trasnactions = Transaction::where('user_id', $request->user_id)
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)
+            ->paginate('100');
+
+
+            return view('customer-details', compact('customer_trasnactions', 'customer'));
+
+
+    }
+
     public function update_customer(request $request)
     {
-
 
         $user = User::find($request->id);
 
@@ -57,7 +76,6 @@ class CustomerController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         }
-
 
         $update = User::where('id', $request->id)
             ->update([
@@ -78,13 +96,12 @@ class CustomerController extends Controller
                 'c_bank_name' => $request->c_bank_name,
                 'v_account_no' => $request->v_account_no,
                 'email' => $request->email,
-                'password' => bcrypt($request->password) ,
+                'password' => bcrypt($request->password),
                 'v_account_no' => $request->v_account_no,
 
-        ]);
+            ]);
 
         return back()->with('message', 'Customer Information Successfully Updated');
-
 
         // dd($update);
 
@@ -96,9 +113,8 @@ class CustomerController extends Controller
         $user->is_active = $request->status;
         $user->save();
 
-        return response()->json(['success'=>'Status change successfully.']);
+        return response()->json(['success' => 'Status change successfully.']);
     }
-
 
     public function update_verification(request $request)
     {
@@ -107,16 +123,12 @@ class CustomerController extends Controller
             ->update([
 
                 'status' => '2',
-                'is_identification_verified' => '1'
+                'is_identification_verified' => '1',
 
-        ]);
-
+            ]);
 
         return back()->with('message', 'Identification Successfully Updated');
 
     }
-
-
-
 
 }

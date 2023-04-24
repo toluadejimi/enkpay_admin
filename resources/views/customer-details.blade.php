@@ -286,9 +286,10 @@
                                 <div class="col-lg-3">
                                     <span>Terminal Status</span>
                                     <div class="mt-2">
-                                    <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox" name="t_status"
-                                        data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
-                                        data-on="Active" data-off="InActive" {{ $customer->is_active ? 'checked' : '' }}>
+                                        <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox"
+                                            name="t_status" data-onstyle="success" data-offstyle="danger"
+                                            data-toggle="toggle" data-on="Active" data-off="InActive" {{
+                                            $customer->is_active ? 'checked' : '' }}>
                                     </div>
 
                                 </div>
@@ -408,7 +409,43 @@
                             <p class="text-sm mb-0">
                             </p>
                         </div>
-                        <div class="col-lg-6 col-5 my-auto text-end">
+
+                        <hr class="mt-4" />
+                        <h6>Filter</h6>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+
+                                <input type="text" id="mytable" class="form-control col-4 mb-5" data-table="table"
+                                    placeholder="Search" />
+
+                            </div>
+
+
+                            <form class="col-lg-9 row" action="/date-search" method="POST">
+                                @csrf
+
+                                    <div class="col-lg-3 col-5">
+
+                                        <input type="date" class="form-control form-control-lg" required name="startDate"
+                                            placeholder="choose date">
+
+                                    </div>
+
+                                    <input type="text" class="form-control form-control-lg" hidden name="user_id" value="{{$customer->id}}">
+
+                                    <div class="col-lg-3 col-5">
+
+                                        <input type="date"  class="form-control form-control-lg" required name="endDate"
+                                            placeholder="choose date">
+
+                                    </div>
+
+                                    <button a
+                                    class="btn btn-block btn-primary col-lg-4"
+                                    name="submit" type="submit">Search</a></button>
+
+                            </form>
 
                         </div>
                     </div>
@@ -443,7 +480,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="geeks">
 
                                 @forelse ($customer_trasnactions as $item)
                                 <tr>
@@ -517,7 +554,7 @@
                   });
               })
             })
-          </script>
+        </script>
     </div>
 
 

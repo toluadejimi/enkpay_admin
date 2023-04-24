@@ -50,6 +50,10 @@ Route::get('changedatastatus',[SettingsController::class, 'changeDataStatus']);
 Route::get('changeterminalstatus',[SettingsController::class, 'changeTerminalStatus']);
 
 
+//search
+
+
+Route::post('date-search',[CustomerController::class, 'date_search']);
 
 
 
