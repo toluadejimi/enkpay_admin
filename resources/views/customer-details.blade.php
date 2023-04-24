@@ -414,6 +414,7 @@
                         <h6>Filter</h6>
 
                         <div class="row">
+                            
                             <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
 
                                 <input type="text" id="mytable" class="form-control col-4 mb-5" data-table="table"

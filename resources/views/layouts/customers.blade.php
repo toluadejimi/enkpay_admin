@@ -610,7 +610,7 @@
 
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('public/js/script.js') }}"></script>
 </body>
 
 </html>
