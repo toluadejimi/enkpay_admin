@@ -286,11 +286,32 @@
                                 <div class="col-lg-3">
                                     <span>Terminal Status</span>
                                     <div class="mt-2">
-                                        <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox"
-                                            name="t_status" data-onstyle="success" data-offstyle="danger"
+                                        <input data-id="{{$customer->id}}" class="terminal" type="checkbox"  data-onstyle="success" data-offstyle="danger"
                                             data-toggle="toggle" data-on="Active" data-off="InActive" {{
                                             $customer->is_active ? 'checked' : '' }}>
                                     </div>
+
+                                    <script>
+                                        $(function() {
+                                          $('.terminal').change(function() {
+                                              var status = $(this).prop('checked') == true ? 1 : 0;
+                                              var user_id = $(this).data('id');
+
+                                              $.ajax({
+                                                  type: "GET",
+                                                  dataType: "json",
+                                                  url: '/changeterminalstatus',
+                                                  data: {'status': status, 'user_id': user_id},
+                                                  success: function(data){
+                                                    console.log(data)
+                                                    console.log(ajax)
+                                                    console.log(data.success)
+                                                    location.reload()
+                                                  }
+                                              });
+                                          })
+                                        })
+                                    </script>
 
                                 </div>
 
@@ -536,26 +557,6 @@
         <div class="col-lg-4 col-md-6">
 
         </div>
-
-        <script>
-            $(function() {
-              $('.toggle-class').change(function() {
-                  var status = $(this).prop('checked') == true ? 1 : 0;
-                  var user_id = $(this).data('id');
-
-                  $.ajax({
-                      type: "GET",
-                      dataType: "json",
-                      url: '/changeterminalstatus',
-                      data: {'status': status, 'user_id': user_id},
-                      success: function(data){
-                        console.log(data.success),
-                        location.reload()
-                      }
-                  });
-              })
-            })
-        </script>
     </div>
 
 

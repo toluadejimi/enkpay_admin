@@ -90,9 +90,9 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Errand Profit</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Main Wallet</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        {{number_format($errand_profit)}}
+                                        {{number_format($main_wallet)}}
                                     </h5>
                                 </div>
                             </div>
