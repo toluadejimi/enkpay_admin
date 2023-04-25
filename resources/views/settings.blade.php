@@ -181,19 +181,36 @@
                                 <div class="col-lg-3">
                                         <input data-id="{{$features->id}}" class="toggle-class" type="checkbox"
                                             name="t_status" data-onstyle="success" data-offstyle="danger"
-                                            data-toggle="toggle" data-on="POS ACTIVE" data-off="POS INACTIVE" {{
+                                            data-toggle="toggle" data-on="POS" data-off="POS" {{
                                             $features->pos ? 'checked' : '' }}>
 
                                 </div>
 
 
                                 <div class="col-lg-3">
-                                        <input data-id="{{$features->id}}" class="toggle-class" type="checkbox"
+                                        <input data-id="{{$features->id}}" class="bank" type="checkbox"
                                             name="t_status" data-onstyle="success" data-offstyle="danger"
-                                            data-toggle="toggle" data-on="DATA ACTIVE" data-off="DATA INACTIVE" {{
-                                            $features->data ? 'checked' : '' }}>
+                                            data-toggle="toggle" data-on="BANK" data-off="BANK" {{
+                                            $features->bank_transfer ? 'checked' : '' }}>
 
                                 </div>
+
+                                <div class="col-lg-3">
+                                    <input data-id="{{$features->id}}" class="bills" type="checkbox"
+                                        name="t_status" data-onstyle="success" data-offstyle="danger"
+                                        data-toggle="toggle" data-on="POS" data-off="POS" {{
+                                        $features->pos ? 'checked' : '' }}>
+
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                    <input data-id="{{$features->id}}" class="data" type="checkbox"
+                                        name="t_status" data-onstyle="success" data-offstyle="danger"
+                                        data-toggle="toggle" data-on="DATA" data-off="DATA" {{
+                                        $features->data ? 'checked' : '' }}>
+
+                            </div>
 
 
 
@@ -263,7 +280,7 @@
 
         <script>
             $(function() {
-      $('.toggle-class').change(function() {
+          $('.data').change(function() {
           var status = $(this).prop('checked') == true ? 1 : 0;
           var feature_id = $(this).data('id');
 

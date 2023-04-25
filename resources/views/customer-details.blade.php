@@ -258,8 +258,8 @@
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Address</label>
-                                    <input class="form-control form-control-lg" name="address_line1" autofocus
-                                        value="{{$customer->address_line1}}">
+                                    <input class="form-control form-control-lg" name="street" autofocus
+                                        value="{{$customer->street}}">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
@@ -414,7 +414,7 @@
                         <h6>Filter</h6>
 
                         <div class="row">
-                            
+
                             <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
 
                                 <input type="text" id="mytable" class="form-control col-4 mb-5" data-table="table"

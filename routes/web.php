@@ -45,14 +45,13 @@ Route::get('changeterminalstatus',[CustomerController::class, 'changeTerminalSta
 
 //settings
 Route::get('settings',[SettingsController::class, 'index']);
+
 Route::get('changeposstatus',[SettingsController::class, 'changePosStatus']);
 Route::get('changedatastatus',[SettingsController::class, 'changeDataStatus']);
-Route::get('changeterminalstatus',[SettingsController::class, 'changeTerminalStatus']);
+Route::get('bank-transfer',[SettingsController::class, 'changeBankStatus']);
 
 
 //search
-
-
 Route::post('date-search',[CustomerController::class, 'date_search']);
 
 

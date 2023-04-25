@@ -39,6 +39,8 @@ class SettingsController extends Controller
         return response()->json(['success'=>'Status change successfully.']);
     }
 
+
+
     public function changeDataStatus(Request $request)
     {
         $feature = Feature::find($request->feature_id);
@@ -47,6 +49,16 @@ class SettingsController extends Controller
 
         return response()->json(['success'=>'Status change successfully.']);
     }
+
+    public function changeBankStatus(Request $request)
+    {
+        $feature = Feature::find($request->feature_id);
+        $feature->bank_transfer = $request->status;
+        $feature->save();
+
+        return response()->json(['success'=>'Status change successfully.']);
+    }
+
 
 
 
