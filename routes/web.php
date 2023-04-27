@@ -56,10 +56,17 @@ Route::get('bank-transfer',[SettingsController::class, 'changeBankStatus']);
 
 //search
 Route::post('date-search',[CustomerController::class, 'date_search']);
+Route::post('transaction-search',[TransactionController::class, 'transaction_search']);
+
+
 
 
 //Transaction
 Route::get('transaction',[TransactionController::class, 'index']);
+
+
+
+//
 
 
 

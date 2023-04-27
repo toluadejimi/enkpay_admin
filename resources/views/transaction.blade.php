@@ -33,7 +33,7 @@
                             </div>
 
 
-                            <form class="col-lg-9 row" action="/date-search" method="POST">
+                            <form class="col-lg-9 row" action="/transaction-search" method="POST">
                                 @csrf
 
                                     <div class="col-lg-3 col-5">
@@ -135,7 +135,21 @@
                             {{ $all_trasnactions->onEachSide(5)->links() }}
 
 
+
+                            <tfoot>
+
+                                    <th colspan="1"></th>
+                                    <th colspan="3"></th>
+                                    <th colspan="1">{{$sum_debit}}</th>
+                                    <th colspan="1">{{$sum_credit}}</th>
+
+                            </tfoot>
+
+
                         </table>
+
+
+
 
 
                     </div>

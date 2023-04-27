@@ -519,6 +519,9 @@ Admin Dashboard </title>
       <script async defer src="https://buttons.github.io/buttons.js"></script>
       <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
       <script src="{{ url('') }}/public/assets/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+      <script src="{{ asset('assets/js/scripts.js') }}"></script>
+      <script src="{{ asset('assets/js/custom.js') }}"></script>
+      <script src="{{ asset('public/js/script.js') }}"></script>
     </body>
 
     </html>
