@@ -5,6 +5,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TransactionController;
+
+
 
 
 
@@ -55,6 +58,8 @@ Route::get('bank-transfer',[SettingsController::class, 'changeBankStatus']);
 Route::post('date-search',[CustomerController::class, 'date_search']);
 
 
+//Transaction
+Route::get('transaction',[TransactionController::class, 'index']);
 
 
 
