@@ -112,6 +112,13 @@
 
                         <div class="mb-3">
                             <h5>Customer Details</h5>
+                            @if($customer->type == "3")
+                            <span class="badge rounded-pill bg-warning">Business</span>
+                            @elseif($customer->type == "2")
+                            <span class="badge rounded-pill bg-success">Customer</span>
+                            @else
+                            <span class="badge rounded-pill bg-danger">Agent</span>
+                            @endif
                             <hr class="mt-4" />
                             <span>
                                 <div class="row">
@@ -119,14 +126,14 @@
                                     <div class="col-lg-2">
 
                                         @if($customer->is_phone_verified ?? null == "1")
-                                        <td><span class="badge rounded-pill bg-success ">Phone Number Verified</span>
-                                        </td>
+                                        <span class="badge rounded-pill bg-success ">Phone Number Verified</span>
+
                                         @elseif($customer->is_phone_verified ?? null == "0")
-                                        <td><span class="badge rounded-pill bg-warning">Phone Number Not Verified</span>
-                                        </td>
+                                        <span class="badge rounded-pill bg-warning">Phone Number Not Verified</span>
+
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Phone Number Terminated</span>
-                                        </td>
+                                        <span class="badge rounded-pill bg-danger">Phone Number Terminated</span>
+
                                         @endif
 
                                     </div>
@@ -134,11 +141,11 @@
                                     <div class="col-lg-2">
 
                                         @if($customer->is_email_verified ?? null == "1")
-                                        <td><span class="badge rounded-pill bg-success ">Email Verified</span></td>
+                                        <td><span class="badge rounded-pill bg-success ">Email Verified</span>
                                         @elseif($customer->is_email_verified ?? null == "0")
-                                        <td><span class="badge rounded-pill bg-warning">Email Not Verified</span></td>
+                                        <span class="badge rounded-pill bg-warning">Email Not Verified</span>
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Email Terminated</span></td>
+                                        <span class="badge rounded-pill bg-danger">Email Terminated</span>
                                         @endif
 
                                     </div>
@@ -146,14 +153,14 @@
                                     <div class="col-lg-2">
 
                                         @if($customer->is_identification_verified ?? null == "1")
-                                        <td><span class="badge rounded-pill bg-success ">Identity Approved</span></td>
+                                        <span class="badge rounded-pill bg-success ">Identity Approved</span>
                                         @elseif($customer->is_identification_verified ?? null == "2")
-                                        <td><span class="badge rounded-pill bg-warning">Pending Identity Approval</span>
-                                        </td>
+                                        <span class="badge rounded-pill bg-warning">Pending Identity Approval</span>
+
                                         @elseif($customer->is_identification_verified ?? null == "0")
-                                        <td><span class="badge rounded-pill bg-warning">No Identity Info</span></td>
+                                        <span class="badge rounded-pill bg-warning">No Identity Info</span>
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Identity Rejected</span></td>
+                                        <span class="badge rounded-pill bg-danger">Identity Rejected</span>
                                         @endif
 
                                     </div>
@@ -161,11 +168,11 @@
                                     <div class="col-lg-2">
 
                                         @if($customer->is_kyc_verified ?? null == "1")
-                                        <td><span class="badge rounded-pill bg-success ">Bvn Verified</span></td>
+                                        <span class="badge rounded-pill bg-success ">Bvn Verified</span>
                                         @elseif($customer->is_kyc_verified ?? null == "0")
-                                        <td><span class="badge rounded-pill bg-warning">BVN Not Updated</span></td>
+                                        <span class="badge rounded-pill bg-warning">BVN Not Updated</span>
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Terminated</span></td>
+                                        <span class="badge rounded-pill bg-danger">Terminated</span>
                                         @endif
 
                                     </div>
@@ -174,13 +181,13 @@
 
 
                                         @if($customer->status == "2")
-                                        <td><span class="badge rounded-pill bg-success ">Account Verified</span></td>
+                                        <span class="badge rounded-pill bg-success ">Account Verified</span>
                                         @elseif($customer->status == "1")
-                                        <td><span class="badge rounded-pill bg-warning">Pending Verification</span></td>
+                                        <span class="badge rounded-pill bg-warning">Pending Verification</span>
                                         @elseif($customer->status == "0")
-                                        <td><span class="badge rounded-pill bg-primary">Account Not Verified</span></td>
+                                        <span class="badge rounded-pill bg-primary">Account Not Verified</span>
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Account Terminated</span></td>
+                                        <span class="badge rounded-pill bg-danger">Account Terminated</span>
                                         @endif
 
 
@@ -190,11 +197,11 @@
                                     <div class="col-lg-2">
 
                                         @if($customer->is_active ?? null == "1")
-                                        <td><span class="badge rounded-pill bg-success ">Terminal Active</span>
-                                        </td>
+                                        <span class="badge rounded-pill bg-success ">Terminal Active</span>
+
                                         @else
-                                        <td><span class="badge rounded-pill bg-danger">Terminal Inactive</span>
-                                        </td>
+                                        <span class="badge rounded-pill bg-danger">Terminal Inactive</span>
+
                                         @endif
 
                                     </div>
@@ -272,6 +279,30 @@
                                     <label>State</label>
                                     <input class="form-control form-control-lg" name="state" autofocus
                                         value="{{$customer->state}}">
+                                </div>
+
+
+                                <div class="col-lg-3">
+                                    <label>Type</label>
+                                    <select class="form-control form-control-lg" name="type"
+                                        id="exampleFormControlSelect2">
+
+                                        <option value="{{$customer->type}}">
+                                            @if ($customer->type == 1)
+                                            Agent
+                                            @elseif($customer->type == 2)
+                                            Customer
+                                            @else
+                                            Business
+                                            @endif
+                                        </option>
+                                        <option value="1">Agent</option>
+                                        <option value="2">Customer</option>
+                                        <option value="3">Business</option>
+
+
+                                    </select>
+
                                 </div>
 
                                 <hr class="mt-4" />

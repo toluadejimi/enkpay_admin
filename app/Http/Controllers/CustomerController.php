@@ -99,6 +99,8 @@ class CustomerController extends Controller
                 'password' => bcrypt($request->password),
                 'v_account_no' => $request->v_account_no,
                 'is_active' => $request->is_active,
+                'type' => $request->type,
+
 
 
             ]);
