@@ -285,33 +285,20 @@
 
                                 <div class="col-lg-3">
                                     <span>Terminal Status</span>
-                                    <div class="mt-2">
-                                        <input data-id="{{$customer->id}}" class="terminal" type="checkbox"  data-onstyle="success" data-offstyle="danger"
-                                            data-toggle="toggle" data-on="Active" data-off="InActive" {{
-                                            $customer->is_active ? 'checked' : '' }}>
-                                    </div>
+                                    <select class="form-control form-control-lg" name="is_active"
+                                        id="exampleFormControlSelect2">
 
-                                    <script>
-                                        $(function() {
-                                          $('.terminal').change(function() {
-                                              var status = $(this).prop('checked') == true ? 1 : 0;
-                                              var user_id = $(this).data('id');
+                                        <option value="{{$customer->is_active}}">
+                                            @if ($customer->is_active == 1)
+                                            Active
+                                            @else
+                                            Inactive
+                                            @endif
+                                        </option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Incative</option>
 
-                                              $.ajax({
-                                                  type: "GET",
-                                                  dataType: "json",
-                                                  url: '/changeterminalstatus',
-                                                  data: {'status': status, 'user_id': user_id},
-                                                  success: function(data){
-                                                    console.log(data)
-                                                    console.log(ajax)
-                                                    console.log(data.success)
-                                                    location.reload()
-                                                  }
-                                              });
-                                          })
-                                        })
-                                    </script>
+                                    </select>
 
                                 </div>
 
@@ -447,25 +434,25 @@
                             <form class="col-lg-9 row" action="/date-search" method="POST">
                                 @csrf
 
-                                    <div class="col-lg-3 col-5">
+                                <div class="col-lg-3 col-5">
 
-                                        <input type="date" class="form-control form-control-lg" required name="startDate"
-                                            placeholder="choose date">
+                                    <input type="date" class="form-control form-control-lg" required name="startDate"
+                                        placeholder="choose date">
 
-                                    </div>
+                                </div>
 
-                                    <input type="text" class="form-control form-control-lg" hidden name="user_id" value="{{$customer->id}}">
+                                <input type="text" class="form-control form-control-lg" hidden name="user_id"
+                                    value="{{$customer->id}}">
 
-                                    <div class="col-lg-3 col-5">
+                                <div class="col-lg-3 col-5">
 
-                                        <input type="date"  class="form-control form-control-lg" required name="endDate"
-                                            placeholder="choose date">
+                                    <input type="date" class="form-control form-control-lg" required name="endDate"
+                                        placeholder="choose date">
 
-                                    </div>
+                                </div>
 
-                                    <button a
-                                    class="btn btn-block btn-primary col-lg-4"
-                                    name="submit" type="submit">Search</a></button>
+                                <button a class="btn btn-block btn-primary col-lg-4" name="submit"
+                                    type="submit">Search</a></button>
 
                             </form>
 
