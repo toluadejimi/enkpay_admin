@@ -378,7 +378,7 @@
                                         value="{{$customer->c_bank_name}}">
                                 </div>
 
-                                <hr class="mt-4" />
+                                {{-- <hr class="mt-4" />
                                 <h6>Login Information</h6>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
@@ -399,7 +399,7 @@
                                     <label>Password</label>
                                     <input class="form-control form-control-lg" name="password" autofocus>
 
-                                </div>
+                                </div> --}}
 
 
                                 <hr class="mt-4" />
