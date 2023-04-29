@@ -81,7 +81,7 @@
 
                                 <div class="col-lg-2 col-md-6 mb-md-0 mb-4 form-group">
                                     <label> Type </label>
-                                    <select class="form-control form-control-lg" name="transaction_type"
+                                    <select class="form-control form-control-lg" name="type"
                                         id="exampleFormControlSelect2">
                                         <option value=" ">Select </option>
                                         <option value="outward">Outward</option>
@@ -90,6 +90,22 @@
                                         <option value="ProvidusFunding">Providus Funding</option>
                                         <option value="VirtualFundWallet">Virtual Fund Wallet</option>
                                         <option value="pos">POS</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-lg-2 col-md-6 mb-md-0 mb-4 form-group">
+                                    <label> Title </label>
+                                    <select class="form-control form-control-lg" name="title"
+                                        id="exampleFormControlSelect2">
+                                        <option value=" ">Select </option>
+                                        <option value="outward">Outward</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                        <option value="Fund Wallet">VFD Fund Wallet</option>
+                                        <option value="Providus Funding">Providus Funding</option>
+                                        <option value="Enkpay Transfer">Enkpay Transfer</option>
+                                        <option value="POS Transaction">POS</option>
 
                                     </select>
 
