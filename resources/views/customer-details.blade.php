@@ -530,6 +530,7 @@
                                     <td>{{$item->e_ref}}</td>
                                     <td>{{$item->title}}</td>
                                     <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
+                                    <td>{{number_format($item->amount)}}</td>
                                     <td>{{number_format($item->debit)}}</td>
                                     <td>{{number_format($item->credit)}}</td>
                                     <td>{{number_format($item->balance)}}</td>

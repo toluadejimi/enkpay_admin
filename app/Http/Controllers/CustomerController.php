@@ -96,7 +96,6 @@ class CustomerController extends Controller
                 'c_bank_name' => $request->c_bank_name,
                 'v_account_no' => $request->v_account_no,
                 'email' => $request->email,
-                'password' => bcrypt($request->password),
                 'v_account_no' => $request->v_account_no,
                 'is_active' => $request->is_active,
                 'type' => $request->type,
