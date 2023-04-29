@@ -499,7 +499,7 @@
                                     <th>Trx ID</th>
                                     <th>E REF</th>
                                     <th>Title</th>
-                                    <th>Customer</th>
+                                    <th>Amount</th>
                                     <th>Debit</th>
                                     <th>Credit</th>
                                     <th>Balance</th>
@@ -529,7 +529,6 @@
                                     <td>{{$item->ref_trans_id}}</td>
                                     <td>{{$item->e_ref}}</td>
                                     <td>{{$item->title}}</td>
-                                    <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
                                     <td>{{number_format($item->amount)}}</td>
                                     <td>{{number_format($item->debit)}}</td>
                                     <td>{{number_format($item->credit)}}</td>
