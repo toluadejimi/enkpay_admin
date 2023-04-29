@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Str;
-
-
+use Illuminate\Http\Request;
+use Auth;
+use Hash;
 
 class TransactionController extends Controller
 {
@@ -18,13 +17,13 @@ class TransactionController extends Controller
         $all_trasnactions = Transaction::latest()
             ->paginate('500');
 
-            $sum_debit = Transaction::latest()
+        $sum_debit = Transaction::latest()
             ->sum('debit');
 
         $sum_credit = Transaction::latest()
             ->sum('credit');
 
-        return view('transaction', compact('all_trasnactions' , 'sum_debit', 'sum_credit'));
+        return view('transaction', compact('all_trasnactions', 'sum_debit', 'sum_credit'));
     }
 
     public function transaction_search(request $request)
@@ -52,73 +51,63 @@ class TransactionController extends Controller
 
     }
 
-    public function create_new_trx(){
+    public function create_new_trx()
+    {
 
-        $ref_trans_id = "ENK-".random_int(000000,  9999999);
-
+        $ref_trans_id = "ENK-" . random_int(000000, 9999999);
 
         $users = User::all();
 
-
-
-
         return view('create-new-trx', compact('users', 'ref_trans_id'));
-
 
     }
 
-
-    public function update_trx(request $request){
-
+    public function update_trx(request $request)
+    {
 
         $chk_trx = Transaction::where('ref_trans_id', $request->ref_trans_id)->first()->ref_trans_id ?? null;
 
-        if($chk_trx == $request->ref_trans_id){
+        if ($chk_trx == $request->ref_trans_id) {
             return back()->with('error', 'Duplicate Transaction');
         }
 
 
-        $wallet = User::where('id', $request->user_id)
-        ->first()->main_wallet;
+
+        $user = User::find(Auth::id());
+        if (Hash::check($request->pin, $user->pin)) {
+
+            $wallet = User::where('id', $request->user_id)
+            ->first()->main_wallet;
 
         $updated_credit = $wallet + $request->credit;
 
-
         $update_user = User::where('id', $request->user_id)
-        ->update(['main_wallet' => $updated_credit]);
+            ->update(['main_wallet' => $updated_credit]);
 
+        $trasnaction = new Transaction();
+        $trasnaction->user_id = $request->user_id;
+        $trasnaction->ref_trans_id = $request->ref_trans_id;
+        $trasnaction->e_ref = $request->e_ref;
+        $trasnaction->transaction_type = $request->transaction_type;
+        $trasnaction->credit = $request->credit;
+        $trasnaction->e_charges = $request->enkPay_Cashout_profit;
+        $trasnaction->title = $request->title;
+        $trasnaction->note = $request->note;
+        $trasnaction->fee = $request->fee;
+        $trasnaction->amount = $request->amount;
+        $trasnaction->enkPay_Cashout_profit = $request->enkPay_Cashout_profit;
+        $trasnaction->balance = $updated_credit;
+        $trasnaction->serial_no = $request->serial_no;
+        $trasnaction->status = 1;
+        $trasnaction->save();
 
+        return back()->with('message', 'Transaction Updated Successfully');
 
+        }
 
-
-
-                    $trasnaction = new Transaction();
-                    $trasnaction->user_id = $request->user_id;
-                    $trasnaction->ref_trans_id = $request->ref_trans_id;
-                    $trasnaction->e_ref = $request->e_ref;
-                    $trasnaction->transaction_type = $request->transaction_type;
-                    $trasnaction->credit = $request->credit;
-                    $trasnaction->e_charges = $request->enkPay_Cashout_profit;
-                    $trasnaction->title = $request->title;
-                    $trasnaction->note = $request->note;
-                    $trasnaction->fee = $request->fee;
-                    $trasnaction->amount =$request->amount;
-                    $trasnaction->enkPay_Cashout_profit = $request->enkPay_Cashout_profit;
-                    $trasnaction->balance = $updated_credit;
-                    $trasnaction->serial_no = $request->serial_no;
-                    $trasnaction->status = 1;
-                    $trasnaction->save();
-
-
-
-
-                    return back()->with('message', 'Transaction Updated Successfully');
-
-
+        return redirect('create-new-trx')->with('message', 'Incorrect Pin');
 
 
     }
-
-
 
 }

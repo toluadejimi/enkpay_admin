@@ -150,6 +150,11 @@
                                     <input type="number" class="form-control form-control-lg" name="serial_no" autofocus >
                                 </div>
 
+                                <div class="col-lg-2 col-md-3 mb-md-0 mb-4">
+                                    <label>Pin</label>
+                                    <input type="password" class="form-control form-control-lg" name="pin" autofocus >
+                                </div>
+
 
                                 <button a
                                     class="btn btn-block btn-primary col-lg-3 btn-lg mt-4 font-weight-medium auth-form-btn"
