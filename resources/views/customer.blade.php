@@ -122,6 +122,13 @@
                             <div class="col-lg-6 col-7">
                                 <h6>List of Customers</h6>
                                 <p class="text-sm mb-0">
+
+                                    <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+
+                                        <input type="text" id="mytable" class="form-control col-4 mb-5" data-table="table"
+                                            placeholder="Search" />
+
+                                    </div>
                                 </p>
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
@@ -146,7 +153,7 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody id="geeks">
 
 
                                     @forelse ($customers as $item)
