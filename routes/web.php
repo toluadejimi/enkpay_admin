@@ -61,8 +61,15 @@ Route::post('transaction-search',[TransactionController::class, 'transaction_sea
 
 
 
+
+
+
 //Transaction
 Route::get('transaction',[TransactionController::class, 'index']);
+Route::get('create-new-trx',[TransactionController::class, 'create_new_trx']);
+Route::post('update-trx',[TransactionController::class, 'update_trx']);
+
+
 
 
 

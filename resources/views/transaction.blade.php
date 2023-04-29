@@ -16,6 +16,10 @@
                     <div class="row">
                         <div class="col-lg-6 col-7">
                             <h6>All Transaction Transactions</h6>
+
+                            <a button class="btn btn-primary mr-1" href="create-new-trx">Create New</button></a>
+
+
                             <p class="text-sm mb-0">
                             </p>
                         </div>
