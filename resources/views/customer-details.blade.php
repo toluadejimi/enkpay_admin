@@ -245,7 +245,7 @@
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Email</label>
-                                    <input class="form-control form-control-lg" name="phone" autofocus
+                                    <input class="form-control form-control-lg" name="email" autofocus
                                         value="{{$customer->email}}">
                                 </div>
 
