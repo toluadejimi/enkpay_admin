@@ -160,7 +160,7 @@
 
 
                                     <tr>
-                                        <td><a href="/customer-details/?id={{$item->id}}">{{$item->first_name ?? 'name'}} {{$item->last_name ?? "name"}}</a></td>
+                                        <td><a href="/customer-details/?id={{$item->id}}">{{$item->id}} - {{$item->first_name ?? 'name'}} {{$item->last_name ?? "name"}}</a></td>
                                         <td>{{$item->phone}}</td>
                                         <td>{{$item->state}}</td>
                                         <td>{{$item->gender}}</td>
