@@ -243,16 +243,21 @@
                                         value="{{$customer->phone}}">
                                 </div>
 
+                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                                    <label>Email</label>
+                                    <input class="form-control form-control-lg" name="phone" autofocus
+                                        value="{{$customer->email}}">
+                                </div>
+
+
                                 <div class="col-lg-3 col-md-6 mb-md-0 mb-4 form-group">
                                     <label> Gender </label>
                                     <select class="form-control form-control-lg" name="gender"
                                         id="exampleFormControlSelect2">
-
                                         <option value="{{$customer->gender}}">{{$customer->gender}}</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="prefer">Prefer not to say</option>
-
                                     </select>
 
                                     <input class="form-control form-control-lg" hidden name="id" autofocus

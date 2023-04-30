@@ -47,9 +47,7 @@ class CustomerController extends Controller
     public function date_search(request $request)
     {
         $customer = User::where('id', $request->user_id)
-        ->first();
-
-
+            ->first();
 
         $startDate = $request->startDate;
         $endDate = $request->endDate;
@@ -59,9 +57,7 @@ class CustomerController extends Controller
             ->whereDate('created_at', '<=', $endDate)
             ->paginate('100');
 
-
-            return view('customer-details', compact('customer_trasnactions', 'customer'));
-
+        return view('customer-details', compact('customer_trasnactions', 'customer'));
 
     }
 
@@ -77,12 +73,29 @@ class CustomerController extends Controller
             );
         }
 
+        if ($user->is_email_verified == 0) {
+
+            User::where('id', $request->id)
+                ->update([
+                    'is_email_verified' => 1,
+                ]);
+        }
+
+        if ($user->is_phone_verified == 0) {
+
+            User::where('id', $request->id)
+                ->update([
+                    'is_phone_verified' => 1,
+                ]);
+        }
+
         $update = User::where('id', $request->id)
             ->update([
 
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone' => $request->phone,
+                'email' => $request->email,
                 'gender' => $request->gender,
                 'address_line1' => $request->address_line1,
                 'lga' => $request->lga,
@@ -99,8 +112,6 @@ class CustomerController extends Controller
                 'v_account_no' => $request->v_account_no,
                 'is_active' => $request->is_active,
                 'type' => $request->type,
-
-
 
             ]);
 
