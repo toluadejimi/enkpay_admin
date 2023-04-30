@@ -19,9 +19,10 @@ class SettingsController extends Controller
 
     public function index(){
 
-        $settings = Setting::where('id', 1)->get();
+        $settings = Setting::where('id', 1)->first();
 
         $features = Feature::where('id', 1)->first();
+
 
 
 
@@ -30,35 +31,52 @@ class SettingsController extends Controller
 
 
 
-    public function changePosStatus(Request $request)
-    {
-        $feature = Feature::find($request->feature_id);
-        $feature->pos = $request->status;
-        $feature->save();
 
-        return response()->json(['success'=>'Status change successfully.']);
+    public function update_fetures(request $request){
+
+
+        $update = Feature::where('id', 1)
+        ->update([
+
+            'pos' => $request->pos,
+            'bank_transfer' => $request->bank_transfer,
+            'bills' => $request->bills,
+            'data' => $request->data,
+            'airtime' => $request->airtime,
+            'insurance' => $request->insurance,
+            'education' => $request->education,
+            'power' => $request->power,
+            'exchange' => $request->exchange,
+            'ticket' => $request->ticket,
+            'v_card' => $request->v_card,
+
+        ]);
+
+
+        return back()->with('message', 'Features Updated Successfully');
+
+
     }
 
 
 
-    public function changeDataStatus(Request $request)
-    {
-        $feature = Feature::find($request->feature_id);
-        $feature->data = $request->status;
-        $feature->save();
+    public function update_store(request $request){
 
-        return response()->json(['success'=>'Status change successfully.']);
+
+        $update = Setting::where('id', 1)
+        ->update([
+
+            'version' => $request->version,
+            'google_url' => $request->playstore_link,
+            'ios_url' => $request->appstore_link,
+
+        ]);
+
+
+        return back()->with('message', 'Settings Updated Successfully');
+
+
     }
-
-    public function changeBankStatus(Request $request)
-    {
-        $feature = Feature::find($request->feature_id);
-        $feature->bank_transfer = $request->status;
-        $feature->save();
-
-        return response()->json(['success'=>'Status change successfully.']);
-    }
-
 
 
 

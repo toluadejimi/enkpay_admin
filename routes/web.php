@@ -48,6 +48,20 @@ Route::get('changeterminalstatus',[CustomerController::class, 'changeTerminalSta
 
 //settings
 Route::get('settings',[SettingsController::class, 'index']);
+Route::post('update-features',[SettingsController::class, 'update_fetures']);
+Route::post('update-store',[SettingsController::class, 'update_store']);
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('changeposstatus',[SettingsController::class, 'changePosStatus']);
 Route::get('changedatastatus',[SettingsController::class, 'changeDataStatus']);
