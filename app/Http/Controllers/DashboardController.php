@@ -83,10 +83,17 @@ class DashboardController extends Controller
 
         $pool_total = get_pool();
 
+        $pp2 = str_replace(',', '', $pool_total);
+
+        $pp3 = (int)$pp2;
 
 
 
-        $remain = $pool_total - $main_wallet;
+
+        $remain = $pp3 - $main_wallet;
+
+
+
 
 
 
