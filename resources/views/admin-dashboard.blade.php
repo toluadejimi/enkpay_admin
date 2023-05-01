@@ -281,7 +281,7 @@
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Pending Order</p>
                                     <h5 class="font-weight-bolder mb-0">
 
-                                        {{number_format($total_orders)}}
+                                        {{number_format($total_orders - $main_wallet)}}
 
 
                                     </h5>
