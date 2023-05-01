@@ -281,7 +281,7 @@
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Pending Order</p>
                                     <h5 class="font-weight-bolder mb-0">
 
-                                        {{number_format($pool_total - $main_wallet)}}
+                                        {{number_format($remain)}}
 
 
                                     </h5>
