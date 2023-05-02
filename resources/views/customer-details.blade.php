@@ -142,11 +142,11 @@
 
                                         @if($customer->is_email_verified ?? null == "1")
                                         <td><span class="badge rounded-pill bg-success ">Email Verified</span>
-                                        @elseif($customer->is_email_verified ?? null == "0")
-                                        <span class="badge rounded-pill bg-warning">Email Not Verified</span>
-                                        @else
-                                        <span class="badge rounded-pill bg-danger">Email Terminated</span>
-                                        @endif
+                                            @elseif($customer->is_email_verified ?? null == "0")
+                                            <span class="badge rounded-pill bg-warning">Email Not Verified</span>
+                                            @else
+                                            <span class="badge rounded-pill bg-danger">Email Terminated</span>
+                                            @endif
 
                                     </div>
 
@@ -265,6 +265,20 @@
                                 </div>
 
 
+                                <div class="col-lg-5 col-md-6 mb-md-5 mb-4 form-group">
+
+                                    <button a
+                                        class="btn btn-block btn-primary col-lg-6 btn-lg mt-4 font-weight-medium auth-form-btn"
+                                        name="submit" type="submit">Update</a></button>
+
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <form method="POST" action="update-address">
+                            @csrf
+                            <div class="row">
                                 <hr class="mt-4" />
                                 <h6>Address Information</h6>
 
@@ -286,6 +300,8 @@
                                         value="{{$customer->state}}">
                                 </div>
 
+                                <input class="form-control form-control-lg" hidden name="id" autofocus
+                                    value="{{$customer->id}}">
 
                                 <div class="col-lg-3">
                                     <label>Type</label>
@@ -310,114 +326,303 @@
 
                                 </div>
 
-                                <hr class="mt-4" />
-                                <h6>Terminal Information</h6>
 
-                                <div class="col-lg-3 mb-4">
+                                <div class="col-lg-5 col-md-6 mb-md-5 mb-4 form-group">
+
+                                    <button a
+                                        class="btn btn-block btn-primary col-lg-6 btn-lg mt-4 font-weight-medium auth-form-btn"
+                                        name="submit" type="submit">Update</a></button>
+
+                                </div>
+                            </div>
+                        </form>
+
+                        <hr class="mt-4" />
+                        <h6>Terminal Information</h6>
+
+
+                        <div class="table-responsive">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+
+                                    <tr>
+                                        <th> Serial No </th>
+                                        <th> Description </th>
+                                        <th> Account No </th>
+                                        <th> Transfer Status </th>
+                                        <th> POS Status</th>
+                                        <th> Action </th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody id="geeks">
+
+                                    @forelse ($terminals as $item)
+                                    <tr>
+                                        <td>{{$item->serial_no}}</td></a>
+                                        <td>{{$item->description}}</td>
+                                        <td>{{$item->description}}</td>
+                                        <td>{{$item->v_account_no}}</td>
+                                        @if($item->transfer_status == "0")
+                                        <td><span class="badge rounded-pill bg-warning text-dark">Can't Transfer</span>
+                                        </td>
+                                        @elseif($item->transfer_status == "1")
+                                        <td><span class="badge rounded-pill bg-success">Transfer Active</span></td>
+                                        @else
+                                        <td><span class="badge rounded-pill bg-danger">NAN</span></td>
+                                        @endif
+
+                                        @if($item->status == "0")
+                                        <td><span class="badge rounded-pill bg-warning text-dark">Inactive</span>
+                                        </td>
+                                        @elseif($item->status == "1")
+                                        <td><span class="badge rounded-pill bg-success">Active</span></td>
+                                        @else
+                                        <td><span class="badge rounded-pill bg-danger">NAN</span></td>
+                                        @endif
+
+                                        @if ($item->transfer_status == 1)
+                                        <td>
+                                            <form method="POST"
+                                                action="/deactivate-terminal/?serial_no={{$item->serial_no}}&user_id={{$customer->id}}">
+                                                @csrf
+                                                @method('POST')
+
+                                                <button type="submit" class="btn btn-warning mt-2"><i
+                                                        class="fa-light fa-trash-can"></i>Deactivate</button>
+                                            </form>
+                                        </td>
+                                        @else
+                                        <td>
+                                            <form method="POST"
+                                                action="/activate-terminal/?serial_no={{$item->serial_no}}&user_id={{$customer->id}}">
+                                                @csrf
+                                                @method('POST')
+
+                                                <button type="submit" class="btn btn-success mt-2"><i
+                                                        class="fa-light fa-trash-can"></i>Activate</button>
+                                            </form>
+                                        </td>
+
+                                        @endif
+
+
+
+                                        <td>
+                                            <form method="POST"
+                                                action="/remove-terminal/?serial_no={{$item->serial_no}}&user_id={{$customer->id}}">
+                                                @csrf
+                                                @method('POST')
+
+                                                <button type="submit" class="btn btn-danger mt-2"><i
+                                                        class="fa-light fa-trash-can"></i>Delete</button>
+                                            </form>
+                                        </td>
+
+
+                                    </tr>
+                                    @empty
+                                    <tr colspan="20" class="text-center">No Terminal Record Found</tr>
+                                    @endforelse
+
+
+                                </tbody>
+
+
+
+                                {{ $terminals->onEachSide(5)->links() }}
+
+
+                            </table>
+
+
+                        </div>
+
+                        {{$customer->serial_no}}
+
+
+                        <form method="POST" action="create-terminal">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-3">
                                     <label>Terminal ID</label>
-                                    <input class="form-control form-control-lg" name="serial_no" autofocus
-                                        value="{{$customer->serial_no}}">
+                                    <input class="form-control form-control-lg" name="serial_no" autofocus required>
                                 </div>
 
                                 <div class="col-lg-3">
-                                    <span>Terminal Status</span>
-                                    <select class="form-control form-control-lg" name="is_active"
-                                        id="exampleFormControlSelect2">
-
-                                        <option value="{{$customer->is_active}}">
-                                            @if ($customer->is_active == 1)
-                                            Active
-                                            @else
-                                            Inactive
-                                            @endif
-                                        </option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Incative</option>
-
-                                    </select>
-
+                                    <label>Description</label>
+                                    <input class="form-control form-control-lg" name="description" autofocus required>
                                 </div>
-
-
-
-                                <hr class="mt-4" />
-                                <h6>Virtual Account Information</h6>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Number</label>
-                                    <input class="form-control form-control-lg" name="v_account_no" autofocus
-                                        value="{{$customer->v_account_no}}">
+                                    <input class="form-control form-control-lg" name="v_account_no" autofocus>
+                                </div>
+
+                                <input name="user_id" value="{{$customer->id}}" hidden>
+
+
+                                <div class="col-lg-5 col-md-6  form-group">
+
+                                    <button a
+                                        class="btn btn-block btn-primary col-lg-6 btn-lg mt-4 font-weight-medium auth-form-btn"
+                                        name="submit" type="submit">Create</a></button>
+
+                                </div>
+                            </div>
+                        </form>
+
+
+
+                        <hr class="mt-4" />
+                        <h6>Virtual Account Information</h6>
+
+
+
+                        <div class="table-responsive stripped">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+
+                                    <tr>
+                                        <th> Account Number </th>
+                                        <th> Account Name </th>
+                                        <th> Bank Name </th>
+                                        <th> Action </th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody id="geeks">
+
+                                    @forelse ($v_acccounts as $item)
+                                    <tr>
+                                        <td>{{$item->v_account_no}}</td></a>
+                                        <td>{{$item->v_account_name}}</td>
+                                        <td>{{$item->v_bank_name}}</td>
+
+
+                                        <td>
+                                            <form
+                                                action="/delete-account-no/?v_account_no={{$item->v_account_no}}&user_id={{$customer->id}}"
+                                                method="post">
+                                                @csrf
+                                                @method('POST')
+
+                                                <button type="submit" class="btn btn-danger mt-3"><i
+                                                        class="fa-light fa-trash-can"></i> Delete </button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                    @empty
+                                    <tr colspan="20" class="text-center">No Account Record Found</tr>
+                                    @endforelse
+
+
+                                </tbody>
+
+
+
+                                {{ $terminals->onEachSide(5)->links() }}
+
+
+                            </table>
+
+
+                        </div>
+
+
+                        <form method="POST" action="create-account-details">
+                            @csrf
+
+                            <div class="row">
+
+                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                                    {{$customer->v_account_no}}
+                                    {{$customer->v_account_name}}
+                                    {{$customer->v_bank_name}}
+
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                                    <label>Virtual Account Number</label>
+                                    <input class="form-control form-control-lg" name="v_account_no" autofocus>
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Name</label>
                                     <input class="form-control form-control-lg" name="v_account_name" autofocus
-                                        value="{{$customer->v_account_name}}">
+                                        value="">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Bank</label>
-                                    <input class="form-control form-control-lg" name="v_bank_name" autofocus
-                                        value="{{$customer->v_bank_name}}">
+                                    <input class="form-control form-control-lg" name="v_bank_name" autofocus value="">
                                 </div>
 
+                                <input name="user_id" value="{{$customer->id}}" hidden>
 
-                                <hr class="mt-4" />
-                                <h6>Cash Out Account Information</h6>
 
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
-                                    <label>Cash Out Account Number</label>
-                                    <input class="form-control form-control-lg" name="c_account_number" autofocus
-                                        value="{{$customer->c_account_number}}">
+                                <div class="col-lg-3 col-md-6 mt-4 form-group">
+
+                                    <button a class="btn btn-block btn-primary  font-weight-medium auth-form-btn"
+                                        name="submit" type="submit">Create</a></button>
+
                                 </div>
-
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
-                                    <label>Cash Out Account Name</label>
-                                    <input class="form-control form-control-lg" name="c_account_name" autofocus
-                                        value="{{$customer->c_account_name}}">
-                                </div>
-
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
-                                    <label>Cash Out Account Bank</label>
-                                    <input class="form-control form-control-lg" name="c_bank_name" autofocus
-                                        value="{{$customer->c_bank_name}}">
-                                </div>
-
-                                {{-- <hr class="mt-4" />
-                                <h6>Login Information</h6>
-
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
-                                    <label>Phone Number</label>
-                                    <input class="form-control form-control-lg" name="phone" autofocus
-                                        value="{{$customer->phone}}">
-                                </div>
-
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
-                                    <label>Email</label>
-                                    <input class="form-control form-control-lg" name="email" autofocus
-                                        value="{{$customer->email}}">
-                                </div>
-
-
-
-                                <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
-                                    <label>Password</label>
-                                    <input class="form-control form-control-lg" name="password" autofocus>
-
-                                </div> --}}
-
-
-                                <hr class="mt-4" />
-
-                                <button a
-                                    class="btn btn-block btn-primary col-lg-3 btn-lg mt-4 font-weight-medium auth-form-btn"
-                                    name="submit" type="submit">Update Info</a></button>
-
                             </div>
-
                         </form>
 
 
+                        <hr class="mt-4" />
+                        <h6>Cash Out Account Information</h6>
+
+                        <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                            <label>Cash Out Account Number</label>
+                            <input class="form-control form-control-lg" name="c_account_number" autofocus
+                                value="{{$customer->c_account_number}}">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                            <label>Cash Out Account Name</label>
+                            <input class="form-control form-control-lg" name="c_account_name" autofocus
+                                value="{{$customer->c_account_name}}">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                            <label>Cash Out Account Bank</label>
+                            <input class="form-control form-control-lg" name="c_bank_name" autofocus
+                                value="{{$customer->c_bank_name}}">
+                        </div>
+
+                        {{--
+                        <hr class="mt-4" />
+                        <h6>Login Information</h6>
+
+                        <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                            <label>Phone Number</label>
+                            <input class="form-control form-control-lg" name="phone" autofocus
+                                value="{{$customer->phone}}">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                            <label>Email</label>
+                            <input class="form-control form-control-lg" name="email" autofocus
+                                value="{{$customer->email}}">
+                        </div>
+
+
+
+                        <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
+                            <label>Password</label>
+                            <input class="form-control form-control-lg" name="password" autofocus>
+
+                        </div> --}}
+
+
+                        <hr class="mt-4" />
+
+
 
                     </div>
 
@@ -427,164 +632,170 @@
 
                 </div>
 
+
+
+
+
             </div>
+
         </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="row mt-4">
+    <div class="col-lg-5 mb-lg-0 mb-4">
 
     </div>
 
+</div>
+<div class="row my-4">
+    <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="col-lg-6 col-7">
+                        <h6>Customer Transactions</h6>
+                        <p class="text-sm mb-0">
+                        </p>
+                    </div>
 
+                    <hr class="mt-4" />
+                    <h6>Filter</h6>
 
-
-
-
-    <div class="row mt-4">
-        <div class="col-lg-5 mb-lg-0 mb-4">
-
-        </div>
-
-    </div>
-    <div class="row my-4">
-        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-            <div class="card">
-                <div class="card-header pb-0">
                     <div class="row">
-                        <div class="col-lg-6 col-7">
-                            <h6>Customer Transactions</h6>
-                            <p class="text-sm mb-0">
-                            </p>
+
+                        <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+
+                            <input type="text" id="mytable" class="form-control col-4 mb-5" data-table="table"
+                                placeholder="Search" />
+
                         </div>
 
-                        <hr class="mt-4" />
-                        <h6>Filter</h6>
 
-                        <div class="row">
+                        <form class="col-lg-9 row" action="/date-search" method="POST">
+                            @csrf
 
-                            <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                            <div class="col-lg-3 col-5">
 
-                                <input type="text" id="mytable" class="form-control col-4 mb-5" data-table="table"
-                                    placeholder="Search" />
+                                <input type="date" class="form-control form-control-lg" required name="startDate"
+                                    placeholder="choose date">
 
                             </div>
 
+                            <input type="text" class="form-control form-control-lg" hidden name="user_id"
+                                value="{{$customer->id}}">
 
-                            <form class="col-lg-9 row" action="/date-search" method="POST">
-                                @csrf
+                            <div class="col-lg-3 col-5">
 
-                                <div class="col-lg-3 col-5">
+                                <input type="date" class="form-control form-control-lg" required name="endDate"
+                                    placeholder="choose date">
 
-                                    <input type="date" class="form-control form-control-lg" required name="startDate"
-                                        placeholder="choose date">
+                            </div>
 
-                                </div>
+                            <button a class="btn btn-block btn-primary col-lg-4" name="submit"
+                                type="submit">Search</a></button>
 
-                                <input type="text" class="form-control form-control-lg" hidden name="user_id"
-                                    value="{{$customer->id}}">
-
-                                <div class="col-lg-3 col-5">
-
-                                    <input type="date" class="form-control form-control-lg" required name="endDate"
-                                        placeholder="choose date">
-
-                                </div>
-
-                                <button a class="btn btn-block btn-primary col-lg-4" name="submit"
-                                    type="submit">Search</a></button>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body px-0 pb-2">
-                    <div class="table-responsive">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-
-                                <tr>
-                                    <th>Trx ID</th>
-                                    <th>E REF</th>
-                                    <th>Title</th>
-                                    <th>Amount</th>
-                                    <th>Debit</th>
-                                    <th>Credit</th>
-                                    <th>Balance</th>
-                                    <th>E Fee</th>
-                                    <th>Profit</th>
-                                    <th>Terminal No</th>
-                                    <th>Sender Name</th>
-                                    <th>Sender Account</th>
-                                    <th>Sender Bank</th>
-                                    <th>Receiver Name</th>
-                                    <th>Receiver Account</th>
-
-
-                                    <th>Status</th>
-                                    <th>Date</th>
-
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="geeks">
-
-                                @forelse ($customer_trasnactions as $item)
-                                <tr>
-                                    {{-- <td><a href="/order-details/?id={{$item->id}}">{{$item->order_id}}</a></td>
-                                    --}}
-                                    <td>{{$item->ref_trans_id}}</td>
-                                    <td>{{$item->e_ref}}</td>
-                                    <td>{{$item->title}}</td>
-                                    <td>{{number_format($item->amount)}}</td>
-                                    <td>{{number_format($item->debit)}}</td>
-                                    <td>{{number_format($item->credit)}}</td>
-                                    <td>{{number_format($item->balance)}}</td>
-                                    <td>{{number_format($item->fee)}}</td>
-                                    <td>{{number_format($item->enkPay_Cashout_profit)}}</td>
-                                    <td>{{$item->serial_no}}</td>
-                                    <td>{{$item->sender_name}}</td>
-                                    <td>{{$item->sender_account_no}}</td>
-                                    <td>{{$item->sender_bank}}</td>
-                                    <td>{{$item->receiver_name}}</td>
-                                    <td>{{$item->receiver_account_no}}</td>
-
-                                    @if($item->status == "1")
-                                    <td><span class="badge rounded-pill bg-success ">Successful</span></td>
-                                    @elseif($item->status == "0")
-                                    <td><span class="badge rounded-pill bg-warning">Pending</span></td>
-                                    @else
-                                    <td><span class="badge rounded-pill bg-danger">Declined</span></td>
-                                    @endif
-                                    <td>{{date('F d, Y', strtotime($item->created_at))}}</td>
-                                    <td>{{date('h:i:s A', strtotime($item->created_at))}}</td>
-
-                                </tr>
-                                @empty
-                                <tr colspan="20" class="text-center">No Record Found</tr>
-                                @endforelse
-
-
-                            </tbody>
-
-
-
-                            {{ $customer_trasnactions->onEachSide(5)->links() }}
-
-
-                        </table>
-
+                        </form>
 
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead>
 
+                            <tr>
+                                <th>Trx ID</th>
+                                <th>E REF</th>
+                                <th>Title</th>
+                                <th>Amount</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Balance</th>
+                                <th>E Fee</th>
+                                <th>Profit</th>
+                                <th>Terminal No</th>
+                                <th>Sender Name</th>
+                                <th>Sender Account</th>
+                                <th>Sender Bank</th>
+                                <th>Receiver Name</th>
+                                <th>Receiver Account</th>
+
+
+                                <th>Status</th>
+                                <th>Date</th>
+
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="geeks">
+
+                            @forelse ($customer_trasnactions as $item)
+                            <tr>
+                                {{-- <td><a href="/order-details/?id={{$item->id}}">{{$item->order_id}}</a></td>
+                                --}}
+                                <td>{{$item->ref_trans_id}}</td>
+                                <td>{{$item->e_ref}}</td>
+                                <td>{{$item->title}}</td>
+                                <td>{{number_format($item->amount)}}</td>
+                                <td>{{number_format($item->debit)}}</td>
+                                <td>{{number_format($item->credit)}}</td>
+                                <td>{{number_format($item->balance)}}</td>
+                                <td>{{number_format($item->fee)}}</td>
+                                <td>{{number_format($item->enkPay_Cashout_profit)}}</td>
+                                <td>{{$item->serial_no}}</td>
+                                <td>{{$item->sender_name}}</td>
+                                <td>{{$item->sender_account_no}}</td>
+                                <td>{{$item->sender_bank}}</td>
+                                <td>{{$item->receiver_name}}</td>
+                                <td>{{$item->receiver_account_no}}</td>
+
+                                @if($item->status == "1")
+                                <td><span class="badge rounded-pill bg-success ">Successful</span></td>
+                                @elseif($item->status == "0")
+                                <td><span class="badge rounded-pill bg-warning">Pending</span></td>
+                                @else
+                                <td><span class="badge rounded-pill bg-danger">Declined</span></td>
+                                @endif
+                                <td>{{date('F d, Y', strtotime($item->created_at))}}</td>
+                                <td>{{date('h:i:s A', strtotime($item->created_at))}}</td>
+
+                            </tr>
+                            @empty
+                            <tr colspan="20" class="text-center">No Record Found</tr>
+                            @endforelse
+
+
+                        </tbody>
+
+
+
+                        {{ $customer_trasnactions->onEachSide(5)->links() }}
+
+
+                    </table>
+
+
+                </div>
+            </div>
         </div>
     </div>
+    <div class="col-lg-4 col-md-6">
+
+    </div>
+</div>
 
 
 
 
 
 
-    @endsection
+@endsection

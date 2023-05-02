@@ -38,7 +38,28 @@ Route::get('customer',[CustomerController::class, 'index']);
 
 Route::get('customer-details',[CustomerController::class, 'customer_details']);
 
+
+//customer
 Route::post('update-customer',[CustomerController::class, 'update_customer']);
+Route::post('update-address',[CustomerController::class, 'update_address']);
+Route::post('create-terminal',[CustomerController::class, 'create_terminal']);
+Route::get('deactivate-terminal',[CustomerController::class, 'deactivate_terminal']);
+Route::get('activate-terminal',[CustomerController::class, 'activate_terminal']);
+
+
+
+
+Route::post('create-account-details',[CustomerController::class, 'create_account_details']);
+
+
+
+Route::get('remove-terminal',[CustomerController::class, 'delete_terminal']);
+Route::get('delete-account-no',[CustomerController::class, 'delete_account_no']);
+
+
+
+
+
 
 Route::get('update-verification',[CustomerController::class, 'update_verification']);
 

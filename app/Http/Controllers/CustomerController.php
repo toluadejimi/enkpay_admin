@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Terminal;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\VirtualAccount;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -40,7 +42,13 @@ class CustomerController extends Controller
         $customer = User::where('id', $request->id)
             ->first();
 
-        return view('customer-details', compact('customer_trasnactions', 'customer'));
+        $terminals = Terminal::where('user_id', $request->id)
+            ->paginate('10');
+
+        $v_acccounts = VirtualAccount::where('user_id', $request->id)
+            ->paginate('10');
+
+        return view('customer-details', compact('customer_trasnactions', 'v_acccounts', 'customer', 'terminals'));
 
     }
 
@@ -97,20 +105,49 @@ class CustomerController extends Controller
                 'phone' => $request->phone,
                 'email' => $request->email,
                 'gender' => $request->gender,
+
+            ]);
+
+        return back()->with('message', 'Customer Information Successfully Updated');
+
+        // dd($update);
+
+    }
+
+    public function update_address(request $request)
+    {
+
+        $user = User::find($request->id);
+
+        if ($user === null) {
+            return response(
+                "User with id {$request->id} not found",
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        if ($user->is_email_verified == 0) {
+
+            User::where('id', $request->id)
+                ->update([
+                    'is_email_verified' => 1,
+                ]);
+        }
+
+        if ($user->is_phone_verified == 0) {
+
+            User::where('id', $request->id)
+                ->update([
+                    'is_phone_verified' => 1,
+                ]);
+        }
+
+        $update = User::where('id', $request->id)
+            ->update([
+
                 'address_line1' => $request->address_line1,
                 'lga' => $request->lga,
                 'state' => $request->state,
-                'serial_no' => $request->serial_no,
-                'v_account_no' => $request->v_account_no,
-                'v_account_name' => $request->v_account_name,
-                'v_bank_name' => $request->v_bank_name,
-                'c_account_number' => $request->c_account_number,
-                'c_account_name' => $request->c_account_name,
-                'c_bank_name' => $request->c_bank_name,
-                'v_account_no' => $request->v_account_no,
-                'email' => $request->email,
-                'v_account_no' => $request->v_account_no,
-                'is_active' => $request->is_active,
                 'type' => $request->type,
 
             ]);
@@ -121,13 +158,117 @@ class CustomerController extends Controller
 
     }
 
-    public function changeTerminalStatus(Request $request)
+    public function delete_terminal(Request $request)
     {
-        $user = User::find($request->user_id);
-        $user->is_active = $request->status;
-        $user->save();
 
-        return response()->json(['success' => 'Status change successfully.']);
+        $user_id = $request->user_id;
+        $serial_no = $request->serial_no;
+
+        $d = Terminal::where([
+            'user_id' => $user_id,
+            'serial_no' => $serial_no,
+        ])->delete();
+        return back()->with('message', 'Terminal Successfully Deleted');
+    }
+
+    public function create_terminal(Request $request)
+    {
+
+        $check = Terminal::where('serial_no', $request->serial_no)
+            ->first()->serial_no ?? null;
+
+        if ($check == $request->serial_no) {
+
+            return back()->with('message', 'Terminal  Already Exist');
+
+        }
+
+        $terminal = new Terminal();
+        $terminal->serial_no = $request->serial_no;
+        $terminal->user_id = $request->user_id;
+        $terminal->v_account_no = $request->v_account_no;
+        $terminal->description = $request->description;
+        $terminal->save();
+
+        return back()->with('message', 'Terminal Successfully Created');
+    }
+
+
+
+    public function activate_terminal(Request $request)
+    {
+
+        $user_id = $request->user_id;
+        $serial_no = $request->serial_no;
+
+        $d = Terminal::where([
+            'user_id' => $user_id,
+            'serial_no' => $serial_no,
+        ])->update([
+            'transfer_status' => 1,
+        ]);
+        return back()->with('message', 'Terminal Successfully Activated');
+    }
+
+
+    public function deactivate_terminal(Request $request)
+    {
+
+        $user_id = $request->user_id;
+        $serial_no = $request->serial_no;
+
+        $d = Terminal::where([
+            'user_id' => $user_id,
+            'serial_no' => $serial_no,
+        ])->update([
+            'transfer_status' => 0,
+        ]);
+        return back()->with('message', 'Terminal Successfully Deactivated');
+    }
+
+
+
+
+
+
+
+
+
+
+    public function create_account_details(Request $request)
+    {
+
+        $check = VirtualAccount::where('v_account_no', $request->v_account_no)
+            ->first()->serial_no ?? null;
+
+        if ($check == $request->v_account_no) {
+
+            return back()->with('message', 'Account  Already Exist');
+
+        }
+
+        $terminal = new VirtualAccount();
+        $terminal->v_account_no = $request->v_account_no;
+        $terminal->	v_account_name = $request->	v_account_name;
+        $terminal->v_bank_name = $request->v_bank_name;
+        $terminal->user_id = $request->user_id;
+        $terminal->save();
+
+        return back()->with('message', 'Account Successfully Created');
+    }
+
+    public function delete_account_no(Request $request)
+    {
+
+        $user_id = $request->user_id;
+        $v_account_no = $request->v_account_no;
+
+        $d = VirtualAccount::where([
+            'user_id' => $user_id,
+            'v_account_no' => $v_account_no,
+        ])->delete();
+
+        return back()->with('message', 'Terminal Successfully Deleted');
     }
 
     public function update_verification(request $request)
