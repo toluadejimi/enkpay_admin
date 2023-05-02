@@ -362,7 +362,6 @@
                                     <tr>
                                         <td>{{$item->serial_no}}</td></a>
                                         <td>{{$item->description}}</td>
-                                        <td>{{$item->description}}</td>
                                         <td>{{$item->v_account_no}}</td>
                                         @if($item->transfer_status == "0")
                                         <td><span class="badge rounded-pill bg-warning text-dark">Can't Transfer</span>
