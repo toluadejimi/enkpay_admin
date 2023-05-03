@@ -251,6 +251,7 @@ class CustomerController extends Controller
         $terminal->v_account_no = $request->v_account_no;
         $terminal->	v_account_name = $request->	v_account_name;
         $terminal->v_bank_name = $request->v_bank_name;
+        $terminal->serial_no = $request->serial_no;
         $terminal->user_id = $request->user_id;
         $terminal->save();
 

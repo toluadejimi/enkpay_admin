@@ -459,6 +459,7 @@
                                     <input class="form-control form-control-lg" name="v_account_no" autofocus>
                                 </div>
 
+
                                 <input name="user_id" value="{{$customer->id}}" hidden>
 
 
@@ -487,6 +488,7 @@
                                         <th> Account Number </th>
                                         <th> Account Name </th>
                                         <th> Bank Name </th>
+                                        <th> Serial No </th>
                                         <th> Action </th>
 
                                     </tr>
@@ -499,6 +501,8 @@
                                         <td>{{$item->v_account_no}}</td></a>
                                         <td>{{$item->v_account_name}}</td>
                                         <td>{{$item->v_bank_name}}</td>
+                                        <td>{{$item->serial_no}}</td>
+
 
 
                                         <td>
@@ -537,12 +541,6 @@
 
                             <div class="row">
 
-                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
-                                    {{$customer->v_account_no}}
-                                    {{$customer->v_account_name}}
-                                    {{$customer->v_bank_name}}
-
-                                </div>
 
                                 <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
                                     <label>Virtual Account Number</label>
@@ -559,6 +557,14 @@
                                     <label>Virtual Account Bank</label>
                                     <input class="form-control form-control-lg" name="v_bank_name" autofocus value="">
                                 </div>
+
+
+                                <div class="col-lg-3 col-md-3 mb-md-0 mb-4">
+                                    <label>Serial No</label>
+                                    <input class="form-control form-control-lg" name="serial_no" autofocus value="">
+                                </div>
+
+
 
                                 <input name="user_id" value="{{$customer->id}}" hidden>
 
