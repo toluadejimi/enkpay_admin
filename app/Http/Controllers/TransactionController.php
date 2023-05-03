@@ -129,7 +129,7 @@ class TransactionController extends Controller
                 $trasnaction->title = "EP VAS";
                 $trasnaction->note = $request->note;
                 //$trasnaction->fee = 10;
-                $trasnaction->amount = $amount;
+                $trasnaction->amount = $request->amount;
                 $trasnaction->enkPay_Cashout_profit = 0;
                 $trasnaction->balance = $updated_debit;
                 $trasnaction->serial_no = $request->serial_no;
