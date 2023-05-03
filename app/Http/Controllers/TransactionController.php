@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Auth;
 use Hash;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -71,43 +71,78 @@ class TransactionController extends Controller
             return back()->with('error', 'Duplicate Transaction');
         }
 
-
-
         $user = User::find(Auth::id());
         if (Hash::check($request->pin, $user->pin)) {
 
-            $wallet = User::where('id', $request->user_id)
-            ->first()->main_wallet;
+            if ($request->transaction_type == 'FundTransfer') {
 
-        $updated_credit = $wallet + $request->credit;
+                $wallet = User::where('id', $request->user_id)
+                    ->first()->main_wallet;
 
-        $update_user = User::where('id', $request->user_id)
-            ->update(['main_wallet' => $updated_credit]);
+                $updated_debit = $request->debit - $wallet;
 
-        $trasnaction = new Transaction();
-        $trasnaction->user_id = $request->user_id;
-        $trasnaction->ref_trans_id = $request->ref_trans_id;
-        $trasnaction->e_ref = $request->e_ref;
-        $trasnaction->transaction_type = $request->transaction_type;
-        $trasnaction->credit = $request->credit;
-        $trasnaction->e_charges = $request->enkPay_Cashout_profit;
-        $trasnaction->title = $request->title;
-        $trasnaction->note = $request->note;
-        $trasnaction->fee = $request->fee;
-        $trasnaction->amount = $request->amount;
-        $trasnaction->enkPay_Cashout_profit = $request->enkPay_Cashout_profit;
-        $trasnaction->balance = $updated_credit;
-        $trasnaction->serial_no = $request->serial_no;
-        $trasnaction->status = 1;
-        $trasnaction->save();
+                $amount = $request->debit - 25;
 
-        return back()->with('message', 'Transaction Updated Successfully');
+                $update_user = User::where('id', $request->user_id)
+                    ->update(['main_wallet' => $updated_debit]);
 
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $request->user_id;
+                $trasnaction->ref_trans_id = $request->ref_trans_id;
+                $trasnaction->e_ref = $request->e_ref;
+                $trasnaction->transaction_type = $request->transaction_type;
+                $trasnaction->debit = $request->debit;
+                $trasnaction->e_charges = 15;
+                $trasnaction->title = $request->title;
+                $trasnaction->note = $request->note;
+                $trasnaction->fee = 10;
+                $trasnaction->amount = $amount;
+                $trasnaction->enkPay_Cashout_profit = 15;
+                $trasnaction->balance = $updated_debit;
+                $trasnaction->serial_no = $request->serial_no;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                return back()->with('message', 'Transaction Updated Successfully');
+
+            }
+
+            if ($request->transaction_type == 'CashOut') {
+
+                $wallet = User::where('id', $request->user_id)
+                    ->first()->main_wallet;
+
+                $updated_credit = $wallet + $request->credit;
+
+                $update_user = User::where('id', $request->user_id)
+                    ->update(['main_wallet' => $updated_credit]);
+
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $request->user_id;
+                $trasnaction->ref_trans_id = $request->ref_trans_id;
+                $trasnaction->e_ref = $request->e_ref;
+                $trasnaction->transaction_type = $request->transaction_type;
+                $trasnaction->credit = $request->credit;
+                $trasnaction->e_charges = $request->enkPay_Cashout_profit;
+                $trasnaction->title = $request->title;
+                $trasnaction->note = $request->note;
+                $trasnaction->fee = $request->fee;
+                $trasnaction->amount = $request->amount;
+                $trasnaction->enkPay_Cashout_profit = $request->enkPay_Cashout_profit;
+                $trasnaction->balance = $updated_credit;
+                $trasnaction->serial_no = $request->serial_no;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                return back()->with('message', 'Transaction Updated Successfully');
+
+            }
         }
 
         return redirect('create-new-trx')->with('message', 'Incorrect Pin');
 
-
     }
+
+   
 
 }
