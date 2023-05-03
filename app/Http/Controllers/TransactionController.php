@@ -79,7 +79,7 @@ class TransactionController extends Controller
                 $wallet = User::where('id', $request->user_id)
                     ->first()->main_wallet;
 
-                $updated_debit = $request->debit - $wallet;
+                $updated_debit =  $wallet - $request->debit;
 
                 $amount = $request->debit - 25;
 
@@ -143,6 +143,6 @@ class TransactionController extends Controller
 
     }
 
-   
+
 
 }
