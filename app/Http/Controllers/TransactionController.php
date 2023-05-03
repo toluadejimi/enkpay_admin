@@ -93,7 +93,7 @@ class TransactionController extends Controller
                 $trasnaction->transaction_type = $request->transaction_type;
                 $trasnaction->debit = $request->debit;
                 $trasnaction->e_charges = 15;
-                $trasnaction->title = $request->title;
+                $trasnaction->title = "EP Transfer";
                 $trasnaction->note = $request->note;
                 $trasnaction->fee = 10;
                 $trasnaction->amount = $amount;
