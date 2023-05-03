@@ -62,6 +62,8 @@
                                     <input class="form-control form-control-lg" name="e_ref" autofocus>
                                 </div>
 
+                             
+
 
                                 <div class="col-lg-2 col-md-6 mb-md-0 mb-4 form-group">
                                     <label> Transaction Type </label>
